@@ -42,5 +42,6 @@
         lines:
           - no switchport
           - ip address 172.16.0.14 255.255.255.252
+          - do wr
         parents: interface Port-channel2
       when: inventory_hostname == "Core2"

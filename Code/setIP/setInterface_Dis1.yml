@@ -22,6 +22,7 @@
         lines:
           - no switchport
           - ip address 172.16.0.9 255.255.255.252
+          - do wr
         parents: interface Port-channel1
       when: inventory_hostname == "Dis1"
 
