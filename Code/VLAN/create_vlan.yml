@@ -4,7 +4,7 @@
   gather_facts: no
   vars_files:
     - pass.yml
-    - vars.yml
+    - vlanID.yml
   tasks:
     - name: Create VLANs
       ios_vlan:

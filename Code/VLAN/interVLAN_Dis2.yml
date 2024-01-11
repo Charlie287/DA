@@ -4,11 +4,11 @@
   gather_facts: no
   vars_files:
     - pass.yml
-    - vars.yml
+    - vlanID.yml
   tasks:
     - name: Configure SVIs and IP addresses
       include_vars:
-        file: vars.yml
+        file: vlanID.yml
         name: vlans
       loop: "{{ vlans }}"
       loop_control:
