@@ -1,0 +1,32 @@
+- name: Configure OSPF Dis2
+  hosts: Dis2
+  gather_facts: no
+  vars_files:
+    - OSPF_vars.yml
+    - pass.yml
+  tasks:
+    - name: Enable routing
+      ios_config:
+        lines:
+          - ip routing
+    - name: Enable OSPF process 10 
+      ios_config:
+        lines:
+          - router ospf 10
+          - router-id 2.2.2.2
+          - passive-interface {{ item }}
+          - net 172.16.0.16 0.0.0.3 area 0
+          - net 192.168.0.0 0.0.255.255 area 0
+      with_items: "{{ dis_passive_interfaces }}"
+
+    - name: Enable OSPF on interfaces
+      ios_config:
+        lines:
+          - "{{ item }}"
+          -  ip ospf 10 area 0
+      with_items: "{{ dis_interfaces }}"
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write

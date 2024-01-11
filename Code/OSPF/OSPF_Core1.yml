@@ -1,0 +1,31 @@
+- name: Configure OSPF Core1
+  hosts: Core1
+  gather_facts: no
+  vars_files:
+    - OSPF_vars.yml
+    - pass.yml
+  tasks:
+    - name: Enable routing
+      ios_config:
+        lines:
+          - ip routing
+    - name: Enable OSPF process 10 
+      ios_config:
+        lines:
+          - router ospf 10
+          - router-id 4.4.4.4
+          - net 172.16.0.0 0.0.0.3 area 0
+          - net 172.16.0.8 0.0.0.3 area 0
+          - net 172.16.0.12 0.0.0.3 area 0
+
+    - name: Enable OSPF on interfaces
+      ios_config:
+        lines:
+          - "{{ item }}"
+          -  ip ospf 10 area 0
+      with_items: "{{ core_interfaces }}"
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write
