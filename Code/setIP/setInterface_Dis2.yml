@@ -1,0 +1,28 @@
+---
+- name: Set IP and Interface configurations on Dis2
+  hosts: Dis2
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Configure interface range Ethernet0/0-1
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - channel-group 1 mode on
+          - no shutdown
+        parents: "{{ item }}"
+      with_items:
+        - interface Ethernet0/0
+        - interface Ethernet0/1
+      when: inventory_hostname == "Dis2"
+
+    - name: Configure interface Port-channel1
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - ip address 172.16.0.17 255.255.255.252
+        parents: interface Port-channel1
+      when: inventory_hostname == "Dis2"
+
+    

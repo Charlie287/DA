@@ -1,0 +1,23 @@
+vlans:
+  - vlan_id: 1
+    department: Management
+  - vlan_id: 10
+    department: LỄ TÂN
+  - vlan_id: 11
+    department: NHÂN SỰ
+  - vlan_id: 12
+    department: MARKETING
+  - vlan_id: 13
+    department: KẾ TOÁN
+  - vlan_id: 14
+    department: IT
+  - vlan_id: 15
+    department: KIỂM TOÁN
+  - vlan_id: 16
+    department: TRUYỀN THÔNG
+  - vlan_id: 17
+    department: PHÁT TRIỂN BỀN VỮNG
+  - vlan_id: 18
+    department: GIÁM ĐỐC
+  - vlan_id: 19
+    department: PHÓ GIÁM ĐỐC

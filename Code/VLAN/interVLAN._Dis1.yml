@@ -1,0 +1,23 @@
+---
+- name: Configure SVIs and IP addresses
+  hosts: Dis1
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - vars.yml
+  tasks:
+    - name: Configure SVIs and IP addresses
+      include_vars:
+        file: vars.yml
+        name: vlans
+      loop: "{{ vlans }}"
+      loop_control:
+        loop_var: item
+      block:
+        - name: Configure SVI for {{ item.department }}
+          ios_config:
+            lines:
+              - interface Vlan{{ item.vlan_id }}
+              - description {{ item.department }}
+              - ip address 192.168.{{ item.vlan_id }}.2 255.255.255.0
+          when: inventory_hostname == "Dis1" and item.vlan_id >= 10 and item.vlan_id <= 19

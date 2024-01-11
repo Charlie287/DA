@@ -1,0 +1,21 @@
+---
+- name: Configure HSRP on Dis2 for VLANs 15-19 (Active)
+  hosts: Dis2
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Configure HSRP for VLANs 15-19
+      ios_config:
+        lines:
+          - "interface Vlan{{ item.vlan_id }}"
+          - "standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1"
+          - "standby {{ item.vlan_id }} priority 110"
+          - "standby {{ item.vlan_id }} preempt"
+      loop:
+        - { vlan_id: 15 }
+        - { vlan_id: 16 }
+        - { vlan_id: 17 }
+        - { vlan_id: 18 }
+        - { vlan_id: 19 }
+      when: inventory_hostname == "Dis2"

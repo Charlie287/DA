@@ -1,0 +1,46 @@
+---
+- name: Set IP and Interface configurations on Core1
+  hosts: Core1
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Configure interface range Ethernet0/0-1
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - channel-group 1 mode on
+          - no shutdown
+        parents: "{{ item }}"
+      with_items:
+        - interface Ethernet0/0
+        - interface Ethernet0/1
+      when: inventory_hostname == "Core1"
+
+    - name: Configure interface Port-channel1
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - ip address 172.16.0.10 255.255.255.252
+        parents: interface Port-channel1
+      when: inventory_hostname == "Core1"
+
+    - name: Configure interface range Ethernet0/2,Ethernet0/3
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - channel-group 2 mode on
+          - no shutdown
+        parents: "{{ item }}"
+      with_items:
+        - interface Ethernet0/2
+        - interface Ethernet0/3
+      when: inventory_hostname == "Core1"
+
+    - name: Configure interface Port-channel2
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - ip address 172.16.0.13 255.255.255.252
+        parents: interface Port-channel2
+      when: inventory_hostname == "Core1"
