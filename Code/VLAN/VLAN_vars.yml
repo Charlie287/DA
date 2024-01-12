@@ -2,25 +2,25 @@ vlans:
   - vlan_id: 1
     department: Management
   - vlan_id: 10
-    department: LỄ TÂN
+    department: LETAN_HO
   - vlan_id: 11
-    department: NHÂN SỰ
+    department: HR_HO
   - vlan_id: 12
-    department: MARKETING
+    department: MARKETING_HO
   - vlan_id: 13
-    department: KẾ TOÁN
+    department: KETOAN_HO
   - vlan_id: 14
-    department: IT
+    department: IT_HO
   - vlan_id: 15
-    department: KIỂM TOÁN
+    department: KIEMTOAN_HO
   - vlan_id: 16
-    department: TRUYỀN THÔNG
+    department: TRUYENTHONG_HO
   - vlan_id: 17
-    department: PHÁT TRIỂN BỀN VỮNG
+    department: PTBV_HO
   - vlan_id: 18
-    department: GIÁM ĐỐC
+    department: GIAMDOC_HO
   - vlan_id: 19
-    department: PHÓ GIÁM ĐỐC
+    department: PHOGIAMDOC_HO
 
 dis_Trunking_interfaces:
   - e0/2

@@ -15,3 +15,8 @@
         - name: "{{ item.department }}"
       with_items: "{{ vlans }}"
       when: inventory_hostname in groups['DIS'] or inventory_hostname in groups['Access']
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - "write"
