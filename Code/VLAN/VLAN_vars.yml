@@ -21,3 +21,10 @@ vlans:
     department: GIÁM ĐỐC
   - vlan_id: 19
     department: PHÓ GIÁM ĐỐC
+
+dis_Trunking_interfaces:
+  - e0/2
+  - e0/3
+  - e1/0
+  - e1/1
+  - e1/2
