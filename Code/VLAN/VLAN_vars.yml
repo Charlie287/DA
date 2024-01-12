@@ -1,26 +1,37 @@
 vlans:
   - vlan_id: 1
     department: Management
+    subnet_mask: 255.255.255.224
   - vlan_id: 10
     department: LETAN_HO
+    subnet_mask: 255.255.255.240
   - vlan_id: 11
     department: HR_HO
+    subnet_mask: "255.255.255.128"
   - vlan_id: 12
     department: MARKETING_HO
+    subnet_mask: "255.255.255.128"
   - vlan_id: 13
     department: KETOAN_HO
+    subnet_mask: "255.255.255.128"
   - vlan_id: 14
     department: IT_HO
+    subnet_mask: "255.255.255.128"
   - vlan_id: 15
     department: KIEMTOAN_HO
+    subnet_mask: "255.255.255.192"
   - vlan_id: 16
     department: TRUYENTHONG_HO
+    subnet_mask: "255.255.255.128"
   - vlan_id: 17
     department: PTBV_HO
+    subnet_mask: "255.255.255.192"
   - vlan_id: 18
     department: GIAMDOC_HO
+    subnet_mask: "255.255.255.224"
   - vlan_id: 19
     department: PHOGIAMDOC_HO
+    subnet_mask: "255.255.255.192"
 
 dis_Trunking_interfaces:
   - e0/2
@@ -52,3 +63,4 @@ F5_Trunking_interfaces:
   - e0/0
   - e0/1
   - e1/0
+

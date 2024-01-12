@@ -1,32 +1,22 @@
----
 - name: Configure SVIs and IP addresses
   hosts: Dis1
   gather_facts: no
+  become: yes  # Add this line to enable privilege escalation
   vars_files:
     - pass.yml
     - VLAN_vars.yml
 
   tasks:
-    - name: Include VLAN variables
-      include_vars:
-        file: VLAN_vars.yml
-        name: vlans
-
-    - name: Configure SVIs and IP addresses
-      include_vars:
-        file: VLAN_vars.yml
-        name: vlans
-
-    - name: Configure SVI for {{ item.department }}
+    - name: Configure SVI for VLANs
       ios_config:
         lines:
           - "interface Vlan{{ item.vlan_id }}"
           - "description {{ item.department }}"
-          - "ip address 192.168.{{ item.vlan_id }}.2 255.255.255.0"
-      when: inventory_hostname == "Dis1" and item.vlan_id is defined and item.vlan_id|int >= 10 and item.vlan_id|int <= 19
-      with_items: "{{ vlans }}"
-      loop_control:
-        loop_var: item
+          - "ip address 192.168.{{ item.vlan_id }}.2 {{ item.subnet_mask }}"
+          - "ip helper-address 10.10.10.5"
+          - "no shut"
+      loop: "{{ vlans }}"
+      when: inventory_hostname == "Dis1"
 
     - name: Configure trunk interfaces
       ios_config:
@@ -34,7 +24,7 @@
           - "interface {{ item }}"
           - "switchport trunk encapsulation dot1q"
           - "switchport mode trunk"
-      with_items: "{{ dis_Trunking_interfaces }}"
+      loop: "{{ dis_Trunking_interfaces }}"
       loop_control:
         loop_var: item
 

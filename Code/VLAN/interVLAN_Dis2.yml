@@ -12,18 +12,15 @@
         file: VLAN_vars.yml
         name: vlans
 
-    - name: Configure SVIs and IP addresses
-      include_vars:
-        file: VLAN_vars.yml
-        name: vlans
-
     - name: Configure SVI for {{ item.department }}
       ios_config:
         lines:
           - "interface Vlan{{ item.vlan_id }}"
           - "description {{ item.department }}"
           - "ip address 192.168.{{ item.vlan_id }}.3 255.255.255.0"
-      when: inventory_hostname == "Dis2" and item.vlan_id is defined and item.vlan_id|int >= 10 and item.vlan_id|int <= 19
+          - "ip helper-address 10.10.10.5"
+          - "no shutdown"
+      when: inventory_hostname == "Dis1" and item.vlan_id is defined and item.vlan_id|int >= 10 and item.vlan_id|int <= 19
       with_items: "{{ vlans }}"
       loop_control:
         loop_var: item
