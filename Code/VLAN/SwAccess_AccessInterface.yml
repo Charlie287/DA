@@ -1,0 +1,53 @@
+---
+- name: Configure Access interfaces
+  hosts: Access 
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+
+  tasks:
+    - name: Configure Access interfaces on F1_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport mode access
+      with_items: "{{ F1_Access_interfaces }}"
+      when: inventory_hostname == "F1_HO"
+
+    - name: Configure Access interfaces on F2_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport mode access
+      with_items: "{{ F2_Access_interfaces }}"
+      when: inventory_hostname == "F2_HO"
+
+    - name: Configure Access interfaces on F3_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport mode access
+      with_items: "{{ F3_Access_interfaces }}"
+      when: inventory_hostname == "F3_HO"
+
+    - name: Configure Access interfaces on F4_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport mode access
+      with_items: "{{ F4_Access_interfaces }}"
+      when: inventory_hostname == "F4_HO"
+
+    - name: Configure Access interfaces on F5_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport mode access
+      with_items: "{{ F5_Access_interfaces }}"
+      when: inventory_hostname == "F5_HO"
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write
