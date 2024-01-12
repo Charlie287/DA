@@ -29,6 +29,26 @@ dis_Trunking_interfaces:
   - e1/1
   - e1/2
 
-access_Trunking_interfaces:
+F1_Trunking_interfaces:
   - e0/0
   - e0/1
+  - e0/3
+
+F2_Trunking_interfaces:
+  - e0/0
+  - e0/1
+  - e1/1
+F3_Trunking_interfaces:
+  - e0/0
+  - e0/1
+  - e0/3
+
+
+F4_Trunking_interfaces:
+  - e0/0
+  - e0/1
+  - e1/1
+F5_Trunking_interfaces:
+  - e0/0
+  - e0/1
+  - e1/0
