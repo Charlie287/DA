@@ -6,10 +6,12 @@
     - pass.yml
     - VLAN_vars.yml
   tasks:
-    - name: Create VLANs
-      ios_vlan:
+    - name: Create VLANs on DIS and Access devices
+      ios_vlans:
         vlan_id: "{{ item.vlan_id }}"
         name: "{{ item.department }}"
-        state: present
+        state: merged
+        config:
+        - name: "{{ item.department }}"
       with_items: "{{ vlans }}"
       when: inventory_hostname in groups['DIS'] or inventory_hostname in groups['Access']

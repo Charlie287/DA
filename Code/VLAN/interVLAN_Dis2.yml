@@ -5,31 +5,40 @@
   vars_files:
     - pass.yml
     - VLAN_vars.yml
+
   tasks:
+    - name: Include VLAN variables
+      include_vars:
+        file: VLAN_vars.yml
+        name: vlans
+
     - name: Configure SVIs and IP addresses
       include_vars:
         file: VLAN_vars.yml
         name: vlans
-      loop: "{{ vlans }}"
+
+    - name: Configure SVI for {{ item.department }}
+      ios_config:
+        lines:
+          - "interface Vlan{{ item.vlan_id }}"
+          - "description {{ item.department }}"
+          - "ip address 192.168.{{ item.vlan_id }}.3 255.255.255.0"
+      when: inventory_hostname == "Dis2" and item.vlan_id is defined and item.vlan_id|int >= 10 and item.vlan_id|int <= 19
+      with_items: "{{ vlans }}"
       loop_control:
         loop_var: item
-      block:
-        - name: Configure SVI for {{ item.department }}
-          ios_config:
-            lines:
-              - interface Vlan{{ item.vlan_id }}
-              - description {{ item.department }}
-              - ip address 192.168.{{ item.vlan_id }}.3 255.255.255.0
-          when: inventory_hostname == "Dis1" and item.vlan_id >= 10 and item.vlan_id <= 19
-        - name: Configure trunk interfaces
-          ios_config:
-            lines:
-              - "{{item}}"
-              - switchport trunk encapsulation dot1q
-              - switchport mode trunk
-          with_items: "{{ dis_Trunking_interfaces}}"
 
-        - name: Save configuration
-          ios_command:
-            commands:
-              - write
+    - name: Configure trunk interfaces
+      ios_config:
+        lines:
+          - "interface {{ item }}"
+          - "switchport trunk encapsulation dot1q"
+          - "switchport mode trunk"
+      with_items: "{{ dis_Trunking_interfaces }}"
+      loop_control:
+        loop_var: item
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - "write"
