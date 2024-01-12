@@ -28,3 +28,7 @@ dis_Trunking_interfaces:
   - e1/0
   - e1/1
   - e1/2
+
+access_Trunking_interfaces:
+  - e0/0
+  - e0/1
