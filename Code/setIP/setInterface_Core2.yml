@@ -15,7 +15,6 @@
       with_items:
         - interface Ethernet0/0
         - interface Ethernet0/1
-      when: inventory_hostname == "Core2"
 
     - name: Configure interface Port-channel1
       cisco.ios.ios_config:
@@ -23,7 +22,6 @@
           - no switchport
           - ip address 172.16.0.18 255.255.255.252
         parents: interface Port-channel1
-      when: inventory_hostname == "Core2"
 
     - name: Configure interface range Ethernet0/2,Ethernet0/3
       cisco.ios.ios_config:
@@ -35,7 +33,6 @@
       with_items:
         - interface Ethernet0/2
         - interface Ethernet0/3
-      when: inventory_hostname == "Core2"
 
     - name: Configure interface Port-channel2
       cisco.ios.ios_config:
@@ -44,4 +41,16 @@
           - ip address 172.16.0.14 255.255.255.252
           - do wr
         parents: interface Port-channel2
-      when: inventory_hostname == "Core2"
+
+    - name: Configure interface e1/0
+      cisco.ios.ios_config:
+        lines:
+          - no switchport
+          - ip address 172.16.0.6 255.255.255.252
+          - no shutdown
+        parents: interface e1/0
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write

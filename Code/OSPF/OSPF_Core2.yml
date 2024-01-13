@@ -9,6 +9,7 @@
       ios_config:
         lines:
           - ip routing
+          
     - name: Enable OSPF process 10 
       ios_config:
         lines:
