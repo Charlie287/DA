@@ -1,0 +1,29 @@
+---
+- name: Configure SpanningTree on Dis1 
+  hosts: Dis1
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+  tasks:
+
+    - name: Configure STP for VLANs 10-14 (Root)
+      ios_config:
+        lines:
+          - spanning-tree mode rapid-pvst
+          - spanning-tree vlan {{ item.vlan_id }} root primary
+      with_items: "{{ vlans }}"
+      when: item.vlan_id >= 10 and item.vlan_id <= 14
+
+    - name: Configure STP for VLANs 15-19 (Second)
+      ios_config:
+        lines:
+          - spanning-tree mode rapid-pvst
+          - spanning-tree vlan {{ item.vlan_id }} root Secondary
+      with_items: "{{ vlans }}"
+      when: item.vlan_id >= 15 and item.vlan_id <= 19
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write
