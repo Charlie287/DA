@@ -4,28 +4,39 @@
   gather_facts: no
   vars_files:
     - pass.yml
+    - VLAN_vars.yml
   tasks:
-    - name: Configure HSRP for VLANs 10-14
-      ios_config:
-        lines:
-          - "interface Vlan{{ item.vlan_id }}"
-          - "standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1"
-          - "standby {{ item.vlan_id }} priority 110"
-          - "standby {{ item.vlan_id }} preempt"
-          - "standby {{ item.vlan_id }} track 1 decrement 50"
-      loop:
-        - { vlan_id: 10 }
-        - { vlan_id: 11 }
-        - { vlan_id: 12 }
-        - { vlan_id: 13 }
-        - { vlan_id: 14 }
-      when: inventory_hostname == "Dis1"
-    
     - name: Configure IP SLA for Internet Check
       ios_config:
         lines:
-          - "ip sla 1"
-          - "icmp-echo 8.8.8.8 source-interface Port-Channel1"  # Kiểm tra Internet qua Port-Channel1
-          - "frequency 60" #Kiem tra 60s 1 lan
-          - "ip sla schedule 1 life forever start-time now" 
-      when: inventory_hostname == "Dis1"
+          - ip sla 1
+          - icmp-echo 8.8.8.8 source-interface Port-Channel1 
+          - frequency 5
+          - ip sla schedule 1 life forever start-time now
+
+    - name: Configure HSRP for VLANs 10-14
+      ios_config:
+        lines:
+          - interface Vlan {{ item.vlan_id }}
+          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
+          - standby {{ item.vlan_id }} priority 110
+          - standby {{ item.vlan_id }} preempt
+          - standby {{ item.vlan_id }} track 1 decrement 50
+      with_items: "{{ vlans }}"
+      when: item.vlan_id >= 10 and item.vlan_id <= 14
+
+    - name: Configure HSRP for VLANs 15-19 (Backup)
+      ios_config:
+        lines:
+          - ip sla schedule 1 life forever start-time now
+          - interface Vlan {{ item.vlan_id }}
+          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
+          - standby {{ item.vlan_id }} priority 90
+          - standby {{ item.vlan_id }} track 1 decrement 50
+      with_items: "{{ vlans }}"
+      when: item.vlan_id >= 15 and item.vlan_id <= 19
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write
