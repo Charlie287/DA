@@ -14,7 +14,6 @@
           - frequency 3
           - ip sla schedule 1 life forever start-time now
 
-
     - name: Configure HSRP for VLANs 10-14 (Backup)
       ios_config:
         lines:
@@ -36,6 +35,14 @@
           - standby {{ item.vlan_id }} track 1 decrement 50
       with_items: "{{ vlans }}"
       when: item.vlan_id >= 15 and item.vlan_id <= 19
+
+    - name: Configure HSRP for VLANs Management
+      ios_config:
+        lines:
+          - interface Vlan 1
+          - standby 1 ip 172.10.1.1
+          - standby 1 priority 90
+          - standby 1 track 1 decrement 50
 
     - name: Save configuration
       ios_command:

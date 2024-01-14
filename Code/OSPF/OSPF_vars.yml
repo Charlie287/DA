@@ -1,5 +1,6 @@
 dis_interfaces:
   - int po 1
+  - int vlan 1
   - int vlan 10
   - int vlan 11
   - int vlan 12
