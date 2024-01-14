@@ -15,7 +15,6 @@
       with_items:
         - interface Ethernet0/0
         - interface Ethernet0/1
-      when: inventory_hostname == "Dis2"
 
     - name: Configure interface Port-channel1
       cisco.ios.ios_config:
@@ -24,6 +23,6 @@
           - ip address 172.16.0.17 255.255.255.252
           - do wr
         parents: interface Port-channel1
-      when: inventory_hostname == "Dis2"
+
 
     
