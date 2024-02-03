@@ -1,0 +1,18 @@
+- name: Configure SNMP on network devices
+  hosts: [CORE:DIS:Access]
+  gather_facts: no
+  vars_files:
+    - pass.yml  
+
+  tasks:
+  - name: Configure SNMP community and traps
+    cisco.ios.ios_config:
+      lines:
+        - snmp-server community GreenFeedCompanySNMP ro
+        - snmp-server enable traps snmp
+        - snmp-server host 10.10.10.12 version 2c GreenFeedCompanySNMP udp-port 162
+
+  - name: Save configuration
+    cisco.ios.ios_command:
+      commands:
+        - write
