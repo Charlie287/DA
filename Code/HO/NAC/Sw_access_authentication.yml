@@ -13,7 +13,7 @@
           - aaa new-model
           - dot1x system-auth-control
           - aaa authentication dot1x default group radius
-          - authentication host-mode multi-host
+          #- authentication host-mode multi-host
           - radius server WINSERVER
           - address ipv4 10.10.10.4 
           - key "{{keyAAA}}"
