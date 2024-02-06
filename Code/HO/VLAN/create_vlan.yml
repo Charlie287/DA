@@ -7,15 +7,22 @@
     - VLAN_vars.yml
   tasks:
     - name: Create VLANs on DIS and Access devices
-      ios_vlans:
-        vlan_id: "{{ item.vlan_id }}"
-        name: "{{ item.department }}"
-        state: merged
+      # ios_vlans:
+      #   vlan_id: "{{ item.vlan_id }}"
+      #   name: "{{ item.department }}"
+      #   state: merged
+      #   config:
+      #   - name: "{{ item.department }}"
+      # with_items: "{{ vlans }}"
+      # when: inventory_hostname in groups['DIS'] or inventory_hostname in groups['Access']
+      cisco.ios.ios_vlans:
         config:
         - name: "{{ item.department }}"
+          vlan_id: "{{ item.vlan_id }}"
+          state: "{{ item.state | default('active') }}"
       with_items: "{{ vlans }}"
       when: inventory_hostname in groups['DIS'] or inventory_hostname in groups['Access']
-
+      
     - name: Save configuration
       ios_command:
         commands:
