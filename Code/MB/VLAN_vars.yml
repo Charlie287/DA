@@ -1,0 +1,36 @@
+vlans:
+  - vlan_id: 99
+    department: Management
+    subnetmask: 255.255.255.224
+  - vlan_id: 20
+    department: TIEPTAN_MB
+    subnetmask: 255.255.255.240
+  - vlan_id: 21
+    department: IT_MB
+    subnetmask: 255.255.255.192
+  - vlan_id: 22
+    department: KETOAN_MB
+    subnetmask: 255.255.255.224
+  - vlan_id: 23
+    department: VHSX_MB
+    subnetmask: 255.255.255.224
+
+
+core_Trunking_interfaces:
+  - e0/2
+  - e0/3
+  - e1/0
+
+access_Trunking_interfaces:
+  - e0/0
+  - e0/1
+
+F1MB_Access_interfaces:
+  - e0/2
+
+F2MB_Access_interfaces:
+  - e0/2
+
+F3MB_Access_interfaces:
+  - e0/2
+  - e0/3
