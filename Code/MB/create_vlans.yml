@@ -1,1 +1,21 @@
-
+---
+- name: Create VLANs on CORE and Access devices
+  hosts: CORE:Access
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+  tasks:
+    - name: Create VLANs on CORE and Access devices
+      cisco.ios.ios_vlans:
+        config:
+        - name: "{{ item.department }}"
+          vlan_id: "{{ item.vlan_id }}"
+          state: "{{ item.state | default('active') }}"
+      with_items: "{{ vlans }}"
+      when: inventory_hostname in groups['CORE'] or inventory_hostname in groups['Access']
+      
+    - name: Save configuration
+      ios_command:
+        commands:
+          - "write"
