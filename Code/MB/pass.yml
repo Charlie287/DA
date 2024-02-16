@@ -1,0 +1,7 @@
+---
+ansible_ssh_type: paramiko
+ansible_ssh_user: adminlocalMB
+ansible_ssh_password: 2023@InFraGF
+ansible_become_password: 2023@InFraGF
+
+keyAAA: ITInfraGF@2024
