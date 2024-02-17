@@ -1,0 +1,17 @@
+---
+- name: Configure SpanningTree on Sw Access 
+  hosts: Access 
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+
+    - name: Configure STP mode rapid-pvst
+      ios_config:
+        lines:
+          - spanning-tree mode rapid-pvst
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write

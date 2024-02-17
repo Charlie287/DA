@@ -1,0 +1,44 @@
+---
+- name: Configure SVIs and IP addresses
+  hosts: Core2_MB
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+
+  tasks:
+    - name: Configure SVI for VLANs 20 & 21
+      ios_config:
+        lines:
+          - interface Vlan {{ item.vlan_id }}
+          - description {{ item.department }}
+          - ip address 192.168.{{ item.vlan_id }}.3 {{ item.subnetmask }}
+          - ip helper-address 172.16.1.1
+          - no shut
+      with_items: "{{ vlans }}"
+      when: item.vlan_id = 20 and item.vlan_id = 21
+
+    - name: Configure SVI for VLANs 22 & 23
+      ios_config:
+        lines:
+          - interface Vlan {{ item.vlan_id }}
+          - description {{ item.department }}
+          - ip address 192.168.{{ item.vlan_id }}.2 {{ item.subnetmask }}
+          - ip helper-address 172.16.1.1
+          - no shut
+      with_items: "{{ vlans }}"
+      when: item.vlan_id = 22 and item.vlan_id = 23
+
+    - name: Configure trunk interfaces
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - switchport trunk encapsulation dot1q
+          - switchport mode trunk
+          - switchport trunk native vlan 99
+      with_items: "{{ core_Trunking_interfaces }}"
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write
