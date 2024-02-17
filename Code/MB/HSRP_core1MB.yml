@@ -1,6 +1,6 @@
 ---
-- name: Configure HSRP on Dis2 for VLANs 15-19 (Active)
-  hosts: Dis2
+- name: Configure HSRP on Core1_MB for VLANs 20-21 (Active)
+  hosts: Core1_MB
   gather_facts: no
   vars_files:
     - pass.yml
@@ -10,21 +10,11 @@
       ios_config:
         lines:
           - ip sla 1
-          - icmp-echo 8.8.8.8 source-interface Port-Channel1 
-          - frequency 3
+          - icmp-echo 8.8.8.8 source-interface e0/0
+          - frequency 5
           - ip sla schedule 1 life forever start-time now
 
-    - name: Configure HSRP for VLANs 10-14 (Backup)
-      ios_config:
-        lines:
-          - interface Vlan {{ item.vlan_id }}
-          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
-          - standby {{ item.vlan_id }} priority 90
-          - standby {{ item.vlan_id }} track 1 decrement 50
-      with_items: "{{ vlans }}"
-      when: item.vlan_id >= 10 and item.vlan_id <= 14
-
-    - name: Configure HSRP for VLANs 15-19 (Active)
+    - name: Configure HSRP for VLANs 20-21
       ios_config:
         lines:
           - interface Vlan {{ item.vlan_id }}
@@ -33,14 +23,25 @@
           - standby {{ item.vlan_id }} preempt
           - standby {{ item.vlan_id }} track 1 decrement 50
       with_items: "{{ vlans }}"
-      when: item.vlan_id >= 15 and item.vlan_id <= 19
+      when: item.vlan_id == 20 and item.vlan_id == 21
+
+    - name: Configure HSRP for VLANs 22-23 (Backup)
+      ios_config:
+        lines:
+          - interface Vlan {{ item.vlan_id }}
+          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
+          - standby {{ item.vlan_id }} priority 90
+          - standby {{ item.vlan_id }} track 1 decrement 50
+      with_items: "{{ vlans }}"
+      when: item.vlan_id == 22 and item.vlan_id == 23
 
     - name: Configure HSRP for VLANs Management
       ios_config:
         lines:
-          - interface Vlan 1
-          - standby 1 ip 172.10.1.1
-          - standby 1 priority 90
+          - interface Vlan 99
+          - standby 1 ip 172.10.2.1
+          - standby 1 priority 110
+          - standby 1 preempt
           - standby 1 track 1 decrement 50
 
     - name: Save configuration
