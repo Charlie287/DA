@@ -109,7 +109,8 @@ line vty 0 4
 login local
 transport input SSH
 exit
-do wr
+no ip routing
+ip default-gateway 172.10.1.1
 interface vlan 1
 description Management
 ip add 172.10.1.6 255.255.255.224
@@ -133,7 +134,8 @@ line vty 0 4
 login local
 transport input SSH
 exit
-do wr
+no ip routing
+ip default-gateway 172.10.1.1
 interface vlan 1
 description Management
 ip add 172.10.1.7 255.255.255.224
@@ -157,7 +159,8 @@ line vty 0 4
 login local
 transport input SSH
 exit
-do wr
+no ip routing
+ip default-gateway 172.10.1.1
 interface vlan 1
 description Management
 ip add 172.10.1.8 255.255.255.224
@@ -182,7 +185,8 @@ line vty 0 4
 login local
 transport input SSH
 exit
-do wr
+no ip routing
+ip default-gateway 172.10.1.1
 interface vlan 1
 description Management
 ip add 172.10.1.9 255.255.255.224
@@ -207,7 +211,8 @@ line vty 0 4
 login local
 transport input SSH
 exit
-do wr
+no ip routing
+ip default-gateway 172.10.1.1
 interface vlan 1
 description Management
 ip add 172.10.1.10 255.255.255.224
