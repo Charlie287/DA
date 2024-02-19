@@ -11,6 +11,7 @@
       ios_config:
         lines:
           - aaa new-model
+          - aaa authorization network default group radius
           - dot1x system-auth-control
           - aaa authentication dot1x default group radius
           - radius server WINSERVER
