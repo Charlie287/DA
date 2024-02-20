@@ -79,29 +79,19 @@ exit
 do write
 ```
 
-# F1
+# F1_MB
 ```yaml
 
 ```
 
-# F2
+# F2_MB
 ```yaml
 
 ```
 
-# F3
+# F3_MB
 ```yaml
 
 
 ```
 
-# F4
-```yaml
-
-```
-
-# F5
-```yaml
-
-
-```
