@@ -1,4 +1,5 @@
 # ISP_R5
+```
 hostname ISP_R5
 access-list 1 permit any
 ip nat inside source list 1 interface e0/0 overload
@@ -25,8 +26,10 @@ net 209.100.150.12 0.0.0.3 area 1
 net 209.100.150.8 0.0.0.3 area 1
 default-information originate
 exit
+```
 
 # ISP_R1
+```
 hostname ISP_R1
 int s1/0
 ip add 209.100.150.1 255.255.255.252
@@ -54,8 +57,10 @@ net 209.100.150.8 0.0.0.3 area 1
 net 100.150.20.1 0.0.0.3 area 1
 passive-interface e0/1
 exit
+```
 
 # ISP_R2
+```
 hostname ISP_R2
 int s1/0
 ip add 209.100.150.2 255.255.255.252
@@ -78,8 +83,10 @@ net 100.150.20.4 0.0.0.3 area 1
 passive-interface e0/1
 exit
 do wr
+```
 
 # ISP_R3
+```
 hostname ISP_R3
 int s1/0
 ip add 209.100.150.21 255.255.255.252
@@ -102,8 +109,10 @@ net 209.100.150.4 0.0.0.3 area 1
 net 209.100.150.12 0.0.0.3 area 1
 exit
 do wr
+```
 
 # ISP_R4
+```
 hostname ISP_R4
 int s1/0
 ip add 209.100.150.22 255.255.255.252
@@ -126,3 +135,4 @@ net 100.150.20.8 0.0.0.3 area 1
 passive-interface e0/1
 exit
 do wr
+```
