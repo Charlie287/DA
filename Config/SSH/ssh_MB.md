@@ -8,24 +8,17 @@ ip routing
 ip domain-name gf.com
 no ip domain-lookup
 crypto key generate rsa general-keys modulus 1024
-username adminlocalMB secret 2023@InFraGF
-ip ssh ver 2
+aaa new-model
+aaa authentication login default group radius local
+aaa authorization exec default group radius local
+radius server WINSERVER
+add ipv4 10.10.10.4
+key ITInfra2024@GF
+ex
 line vty 0 4
-login local
-transport input SSH
-exit
-do wr
-# aaa new-model
-# aaa authentication login default group radius local
-# aaa authorization exec default group radius local
-# radius server WINSERVER
-# ipv4 add 10.10.10.4
-# key ITInfra2024@GF
-# ex
-# line vty 0 4
-# login authentication default
-# transport input ssh
-# ex
+login authentication default
+transport input ssh
+ex
 vlan 99
 name MANAGEMENT_MB
 exit
