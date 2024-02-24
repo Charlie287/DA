@@ -18,7 +18,7 @@ ex
 line vty 0 4
 login authentication default
 transport input ssh
-ex
+exit
 vlan 99
 name MANAGEMENT_MB
 exit
@@ -103,7 +103,7 @@ ex
 line vty 0 4
 login authentication default
 transport input ssh
-ex
+exit
 no ip routing
 ip default-gateway 172.10.2.1
 vlan 99
@@ -113,6 +113,11 @@ interface vlan 99
 description Management
 ip add 172.10.2.4 255.255.255.224
 no shut
+exit
+int range e0/0-1
+switchport trunk encapsulation dot1q
+switchport trunk native vlan 99
+switchport mode trunk
 exit
 do write
 ```
@@ -132,11 +137,11 @@ aaa authorization exec default group radius local
 radius server WINSERVER
 add ipv4 10.10.10.4
 key ITInfra2024@GF
-ex
+exit
 line vty 0 4
 login authentication default
 transport input ssh
-ex
+exit
 no ip routing
 ip default-gateway 172.10.2.1
 vlan 99
@@ -146,6 +151,11 @@ interface vlan 99
 description Management
 ip add 172.10.2.5 255.255.255.224
 no shut
+exit
+int range e0/0-1
+switchport trunk encapsulation dot1q
+switchport trunk native vlan 99
+switchport mode trunk
 exit
 do write
 ```
@@ -165,11 +175,11 @@ aaa authorization exec default group radius local
 radius server WINSERVER
 add ipv4 10.10.10.4
 key ITInfra2024@GF
-ex
+exit
 line vty 0 4
 login authentication default
 transport input ssh
-ex
+exit
 no ip routing
 ip default-gateway 172.10.2.1
 vlan 99
@@ -179,6 +189,11 @@ interface vlan 99
 description Management
 ip add 172.10.2.6 255.255.255.224
 no shut
+exit
+int range e0/0-1
+switchport trunk encapsulation dot1q
+switchport trunk native vlan 99
+switchport mode trunk
 exit
 do write
 
