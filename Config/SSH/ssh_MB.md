@@ -86,7 +86,35 @@ do write
 
 # F1_MB
 ```yaml
-
+hostname F1_MB
+enable secret level 15 2023@InFraGF
+banner motd "KHONG PHAN SU MIEN VAO"
+service password-encryption
+ip domain-name gf.com
+no ip domain-lookup
+crypto key generate rsa general-keys modulus 1024
+aaa new-model
+aaa authentication login default group radius local
+aaa authorization exec default group radius local
+radius server WINSERVER
+add ipv4 10.10.10.4
+key ITInfra2024@GF
+ex
+line vty 0 4
+login authentication default
+transport input ssh
+ex
+no ip routing
+ip default-gateway 172.10.2.1
+vlan 99
+name MANAGEMENT_MB
+exit
+interface vlan 99
+description Management
+ip add 172.10.2.4 255.255.255.224
+no shut
+exit
+do write
 ```
 
 # F2_MB
