@@ -15,6 +15,17 @@ login local
 transport input SSH
 exit
 do wr
+# aaa new-model
+# aaa authentication login default group radius local
+# aaa authorization exec default group radius local
+# radius server WINSERVER
+# ipv4 add 10.10.10.4
+# key ITInfra2024@GF
+# ex
+# line vty 0 4
+# login authentication default
+# transport input ssh
+# ex
 vlan 99
 name MANAGEMENT_MB
 exit
@@ -32,6 +43,7 @@ exit
 int e0/2
 switchport trunk encapsulation dot1q
 switchport mode trunk
+switchport trunk native vlan 99
 exit
 router ospf 10
 net 172.16.1.0 0.0.0.3 area 0
