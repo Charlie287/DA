@@ -1,0 +1,74 @@
+---
+- name: Configure Authentication 802.1x
+  hosts: Access 
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+
+  tasks:
+    - name: Enable Authentication 802.1x 
+      ios_config:
+        lines:
+          - aaa new-model
+          - aaa authorization network default group radius
+          - dot1x system-auth-control
+          - aaa authentication dot1x default group radius
+          - radius server WINSERVER
+          - address ipv4 10.10.10.4 
+          - key "{{keyAAA}}"
+
+    - name: Enable Authentication 802.1x on Access Interface at sw F1
+      ios_config:
+        lines:
+          - interface {{ item }}        
+          - authentication port-control auto
+          - authentication host-mode multi-host
+          - dot1x pae authenticator
+      with_items: "{{F1_Access_interfaces}}"
+      when: inventory_hostname == "F1_HO" and item != "e0/3"
+
+    - name: Enable Authentication 802.1x on Access Interface at sw F2
+      ios_config:
+        lines:
+          - interface {{ item }}        
+          - authentication port-control auto
+          - authentication host-mode multi-host
+          - dot1x pae authenticator
+      with_items: "{{F2_Access_interfaces}}"
+      when: inventory_hostname == "F2_HO" and item != "e1/1"
+
+    - name: Enable Authentication 802.1x on Access Interface at sw F3
+      ios_config:
+        lines:
+          - interface {{ item }}        
+          - authentication port-control auto
+          - authentication host-mode multi-host
+          - dot1x pae authenticator
+      with_items: "{{F3_Access_interfaces}}"
+      when: inventory_hostname == "F3_HO" and item != "e0/3"            
+
+    - name: Enable Authentication 802.1x on Access Interface at sw F4
+      ios_config:
+        lines:
+          - interface {{ item }}        
+          - authentication port-control auto
+          - authentication host-mode multi-host
+          - dot1x pae authenticator
+      with_items: "{{F4_Access_interfaces}}"
+      when: inventory_hostname == "F4_HO" and item != "e1/1" 
+
+    - name: Enable Authentication 802.1x on Access Interface at sw F5
+      ios_config:
+        lines:
+          - interface {{ item }}        
+          - authentication port-control auto
+          - authentication host-mode multi-host
+          - dot1x pae authenticator
+      with_items: "{{F5_Access_interfaces}}"
+      when: inventory_hostname == "F5_HO"  and item != "e1/0"
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write
