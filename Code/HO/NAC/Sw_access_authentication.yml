@@ -10,13 +10,13 @@
     - name: Enable Authentication 802.1x 
       ios_config:
         lines:
-          - aaa new-model
+          # - aaa new-model
           - aaa authorization network default group radius
           - dot1x system-auth-control
           - aaa authentication dot1x default group radius
-          - radius server WINSERVER
-          - address ipv4 10.10.10.4 
-          - key "{{keyAAA}}"
+          # - radius server WINSERVER
+          # - address ipv4 10.10.10.4 
+          # - key "{{keyAAA}}"
 
     - name: Enable Authentication 802.1x on Access Interface at sw F1
       ios_config:
