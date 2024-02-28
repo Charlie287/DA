@@ -1,0 +1,67 @@
+---
+- name: Configure DHCP Snooping Switches Access
+  hosts: Access 
+  gather_facts: no
+  vars_files:
+    - pass.yml
+    - VLAN_vars.yml
+
+  tasks:
+    - name: Configure DHCP Snooping trust interfaces
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping trust
+      with_items: "{{ access_Trunking_interfaces }}"
+
+    - name: Configure DHCP Snooping 
+      ios_config:
+        lines:
+          - no ip dhcp snooping information option
+          - ip dhcp snooping vlan {{item.vlan_id}}
+      with_items: "{{ vlans }}"
+
+    - name: Configure DHCP Snooping interfaces on F1_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping limit rate 30
+      with_items: "{{ F1_Access_interfaces }}"
+      when: inventory_hostname == "F1_HO"
+
+    - name: Configure DHCP Snooping interfaces on F2_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping limit rate 30
+      with_items: "{{ F2_Access_interfaces }}"
+      when: inventory_hostname == "F2_HO"
+    
+    - name: Configure DHCP Snooping interfaces on F3_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping limit rate 30
+      with_items: "{{ F3_Access_interfaces }}"
+      when: inventory_hostname == "F3_HO"
+
+    - name: Configure DHCP Snooping interfaces on F4_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping limit rate 30
+      with_items: "{{ F4_Access_interfaces }}"
+      when: inventory_hostname == "F4_HO"
+
+    - name: Configure DHCP Snooping interfaces on F5_HO
+      ios_config:
+        lines:
+          - interface {{ item }}
+          - ip dhcp snooping limit rate 30
+      with_items: "{{ F5_Access_interfaces }}"
+      when: inventory_hostname == "F5_HO"
+
+    - name: Save configuration
+      ios_command:
+        commands:
+          - write
