@@ -1,0 +1,38 @@
+---
+- name: Set ACL SSH_TELNET
+  hosts: [CORE:DIS:Access]
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Define access control lists
+      cisco.ios.ios_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: SSH_Telnet
+                acl_type: standard
+                aces:
+                  - grant: permit
+                    source:
+                      host: "172.10.1.30"
+                  - grant: permit
+                    source:
+                      host: "10.10.10.10"
+                  - grant: permit
+                    source:
+                      address: "192.168.14.0"
+                      wildcard_bits: "0.0.0.127"
+        state: replaced
+
+    - name: Apply ACL to vty 0 4
+      cisco.ios.ios_config:
+        lines:
+          - access-class SSH_Telnet in
+        parents: "line vty 0 4"
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write
+
