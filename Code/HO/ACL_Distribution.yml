@@ -1,0 +1,143 @@
+---
+- name: Set ACL
+  hosts: DIS
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Define access control lists
+      cisco.ios.ios_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: 110
+                aces:
+                  - grant: permit
+                    protocol: udp
+                    source:
+                      address: any
+                    destination:
+                      address: 10.10.10.0
+                      wildcard_bits: 0.0.0.15
+                      port_protocol:
+                        eq: 53
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      address: any
+                    destination:
+                      address: 10.10.10.0
+                      wildcard_bits: 0.0.0.15
+                      port_protocol:
+                        eq: 53
+                  - grant: deny
+                    protocol: tcp
+                    source:
+                      address: any
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 53
+                  - grant: deny
+                    protocol: udp
+                    source:
+                      address: any
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 53
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      address: 192.168.14.0
+                      wildcard_bits: 0.0.0.127
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 3389
+                  - grant: deny
+                    protocol: tcp
+                    source:
+                      address: any
+                    destination:
+                      address: 10.10.10.0
+                      wildcard_bits: 0.0.0.15
+                      port_protocol:
+                        eq: 3389                       
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      address: 192.168.14.0
+                      wildcard_bits: 0.0.0.127
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 22
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      address: 192.168.14.0
+                      wildcard_bits: 0.0.0.127
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 23
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      host: 172.10.1.30
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 22
+                  - grant: permit
+                    protocol: tcp
+                    source:
+                      host: 172.10.1.30
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 23
+                  - grant: deny
+                    protocol: tcp
+                    source:
+                      address: any
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 23
+                  - grant: deny
+                    protocol: tcp
+                    source:
+                      address: any
+                    destination:
+                      address: any
+                      port_protocol:
+                        eq: 22                                                                        
+                  - grant: permit
+                    protocol: ip
+                    source:
+                      address: any
+                    destination:
+                      address: any
+        state: replaced
+
+    - name: Apply ACL to interfaces
+      cisco.ios.ios_acl_interfaces:
+        config:
+          - name: "{{ item }}"
+            access_groups:
+              - afi : "ipv4"
+                acls:
+                  - name: 110
+                    direction: out
+        state: merged
+      with_items:
+        - "ethernet0/0"
+        - "ethernet0/1"
+        - "Port-channel1"    
+  
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write         
