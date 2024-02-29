@@ -1,0 +1,27 @@
+---
+- name: Configure Login Device With Authentication 802.1x
+  hosts: [CORE:DIS:Access]
+  gather_facts: no
+  vars_files:
+    - pass.yml
+  tasks:
+    - name: Enable Authentication 802.1x 
+      ios_config:
+        lines:
+          - aaa new-model
+          - aaa authentication login default group radius local
+          - aaa authorization exec default group radius local
+          - radius server WINSERVER
+          - address ipv4 10.10.10.4 
+          - key "{{keyAAA}}"
+
+    - name: Apply to vty 0 4
+      cisco.ios.ios_config:
+        lines:
+          - login authentication default
+        parents: "line vty 0 4"
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write
