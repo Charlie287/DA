@@ -103,10 +103,16 @@ ip add 209.100.150.13 255.255.255.252
 ip ospf 209 area 1
 no shut
 exit
+int e0/1
+ip add 100.150.20.13 255.255.255.252
+no shut
+exit
 router ospf 209
 net 209.100.150.20 0.0.0.3 area 1
 net 209.100.150.4 0.0.0.3 area 1
 net 209.100.150.12 0.0.0.3 area 1
+net 100.150.20.12 0.0.0.3 area 1
+passive-interface e0/1
 exit
 do wr
 ```
