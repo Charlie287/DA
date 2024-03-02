@@ -1,6 +1,6 @@
 # Core 1
 ```yaml
-hostname Core1
+hostname Core1_HO
 enable secret level 15 2023@InFraGF
 banner motd "KHONG PHAN SU MIEN VAO"
 service password-encryption
@@ -24,7 +24,7 @@ do write
 
 # Core 2
 ```yaml
-hostname Core1
+hostname Core2_HO
 enable secret level 15 2023@InFraGF
 banner motd "KHONG PHAN SU MIEN VAO"
 service password-encryption
@@ -48,7 +48,7 @@ do write
 
 # Dis1
 ```yaml
-hostname Dis1
+hostname Dis1_HO
 enable secret level 15 2023@InFraGF
 banner motd "KHONG PHAN SU MIEN VAO"
 service password-encryption
@@ -72,7 +72,7 @@ do write
 
 # Dis 2
 ```yaml
-hostname Dis2
+hostname Dis2_HO
 enable secret level 15 2023@InFraGF
 banner motd "KHONG PHAN SU MIEN VAO"
 service password-encryption
