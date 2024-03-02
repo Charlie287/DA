@@ -57,11 +57,17 @@ no ip domain-lookup
 crypto key generate rsa general-keys modulus 1024
 username adminlocalMB secret 2023@InFraGF
 ip ssh ver 2
+aaa new-model
+aaa authentication login default group radius local
+aaa authorization exec default group radius local
+radius server WINSERVER
+add ipv4 10.10.10.4
+key ITInfra2024@GF
+ex
 line vty 0 4
-login local
-transport input SSH
+login authentication default
+transport input ssh
 exit
-do wr
 interface vlan 99
 description Management
 ip add 172.10.2.3 255.255.255.224
