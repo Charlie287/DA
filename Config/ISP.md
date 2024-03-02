@@ -8,6 +8,10 @@ ip add dhcp
 ip nat out
 no shut
 exit
+int e0/1
+ip add 115.30.25.1 255.255.255.252
+no shut
+exit
 int s1/2
 ip add 209.100.150.14 255.255.255.252
 ip ospf 209 area 1
@@ -22,8 +26,9 @@ no shut
 ex
 router ospf 209
 passive-interface e0/0
-net 209.100.150.12 0.0.0.3 area 1
-net 209.100.150.8 0.0.0.3 area 1
+passive-interface e0/1
+net 209.100.150.0 0.0.0.31 area 1
+net 115.30.25.0 0.0.0.3 area 1
 default-information originate
 exit
 ```
@@ -51,10 +56,8 @@ ip add 100.150.20.1 255.255.255.252
 no shut
 exit
 router ospf 209
-net 209.100.150.0 0.0.0.3 area 1
-net 209.100.150.4 0.0.0.3 area 1
-net 209.100.150.8 0.0.0.3 area 1
-net 100.150.20.1 0.0.0.3 area 1
+net 209.100.150.0 0.0.0.31 area 1
+net 100.150.20.0 0.0.0.15 area 1
 passive-interface e0/1
 exit
 ```
@@ -77,9 +80,8 @@ ip add 100.150.20.5 255.255.255.252
 no shut
 exit
 router ospf 209
-net 209.100.150.0 0.0.0.3 area 1
-net 209.100.150.16 0.0.0.3 area 1
-net 100.150.20.4 0.0.0.3 area 1
+net 209.100.150.0 0.0.0.31 area 1
+net 100.150.20.0 0.0.0.15 area 1
 passive-interface e0/1
 exit
 do wr
@@ -108,10 +110,8 @@ ip add 100.150.20.13 255.255.255.252
 no shut
 exit
 router ospf 209
-net 209.100.150.20 0.0.0.3 area 1
-net 209.100.150.4 0.0.0.3 area 1
-net 209.100.150.12 0.0.0.3 area 1
-net 100.150.20.12 0.0.0.3 area 1
+net 209.100.150.0 0.0.0.31 area 1
+net 100.150.20.0 0.0.0.15 area 1
 passive-interface e0/1
 exit
 do wr
@@ -135,9 +135,8 @@ ip add 100.150.20.9 255.255.255.252
 no shut
 exit
 router ospf 209
-net 209.100.150.20 0.0.0.3 area 1
-net 209.100.150.16 0.0.0.3 area 1
-net 100.150.20.8 0.0.0.3 area 1
+net 209.100.150.0 0.0.0.31 area 1
+net 100.150.20.0 0.0.0.15 area 1
 passive-interface e0/1
 exit
 do wr
