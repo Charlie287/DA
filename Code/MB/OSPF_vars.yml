@@ -1,0 +1,11 @@
+core_interfaces:
+  - int vlan 99
+  - int vlan 20
+  - int vlan 21
+  - int vlan 22
+  - int vlan 23
+
+core_passive_interfaces:
+  - e0/2
+  - e0/3
+  - e1/0
