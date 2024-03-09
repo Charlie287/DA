@@ -9,7 +9,7 @@
       ios_config:
         lines:
           - router ospf 10
-          - router-id 6.6.6.6
+          - router-id 5.5.5.5
           - passive-interface {{ item }}
           - net 192.168.0.0 0.0.255.255 area 0
       with_items: "{{ core_passive_interfaces }}"
