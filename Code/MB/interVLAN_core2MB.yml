@@ -16,7 +16,7 @@
           - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
-      when: item.vlan_id == 20 and item.vlan_id == 21
+      when: item.vlan_id >= 20 and item.vlan_id <= 21
 
     - name: Configure SVI for VLANs 22 & 23
       ios_config:
@@ -27,7 +27,7 @@
           - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
-      when: item.vlan_id == 22 and item.vlan_id == 23
+      when: item.vlan_id >= 22 and item.vlan_id <= 23
 
     - name: Configure trunk interfaces
       ios_config:
