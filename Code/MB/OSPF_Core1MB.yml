@@ -1,19 +1,10 @@
 - name: Configure OSPF Core1MB
-  hosts: Core1MB
+  hosts: Core1_MB
   gather_facts: no
   vars_files:
     - OSPF_vars.yml
     - pass.yml
   tasks:
-    - name: Enable OSPF process 10 
-      ios_config:
-        lines:
-          - router ospf 10
-          - router-id 6.6.6.6
-          - passive-interface {{ item }}
-          - net 192.168.0.0 0.0.255.255 area 0
-      with_items: "{{ core_passive_interfaces }}"
-
     - name: Enable OSPF on interfaces
       ios_config:
         lines:
