@@ -39,9 +39,13 @@ switchport mode trunk
 switchport trunk native vlan 99
 exit
 router ospf 10
+router-id 6.6.6.6
 net 172.16.1.0 0.0.0.3 area 0
 net 172.10.2.0 0.0.0.31 area 0
 net 192.168.0.0 0.0.255.255 area 0
+passive-interface e1/0
+passive-interface e0/2
+passive-interface e0/3
 exit
 do write
 ```
@@ -85,9 +89,13 @@ switchport trunk encapsulation dot1q
 switchport mode trunk
 exit
 router ospf 10
+router-id 5.5.5.5
 net 172.16.1.4 0.0.0.3 area 0
 net 172.10.2.0 0.0.0.31 area 0
 net 192.168.0.0 0.0.255.255 area 0
+passive-interface e1/0
+passive-interface e0/2
+passive-interface e0/3
 exit
 do write
 ```
