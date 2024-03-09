@@ -13,7 +13,7 @@
           - interface Vlan {{ item.vlan_id }}
           - description {{ item.department }}
           - ip address 192.168.{{ item.vlan_id }}.2 {{ item.subnetmask }}
-          - ip helper-address 172.16.1.1
+          - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
       when: item.vlan_id == 20 and item.vlan_id == 21
@@ -24,7 +24,7 @@
           - interface Vlan {{ item.vlan_id }}
           - description {{ item.department }}
           - ip address 192.168.{{ item.vlan_id }}.3 {{ item.subnetmask }}
-          - ip helper-address 172.16.1.1
+          - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
       when: item.vlan_id == 22 and item.vlan_id == 23
