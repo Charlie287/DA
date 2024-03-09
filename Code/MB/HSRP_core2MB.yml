@@ -22,7 +22,7 @@
           - standby {{ item.vlan_id }} priority 90
           - standby {{ item.vlan_id }} track 1 decrement 50
       with_items: "{{ vlans }}"
-      when: item.vlan_id == 20 and item.vlan_id == 21
+      when: item.vlan_id >= 20 and item.vlan_id <= 21
 
     - name: Configure HSRP for VLANs 22-23 (Active)
       ios_config:
@@ -33,7 +33,7 @@
           - standby {{ item.vlan_id }} preempt
           - standby {{ item.vlan_id }} track 1 decrement 50
       with_items: "{{ vlans }}"
-      when: item.vlan_id == 22 and item.vlan_id == 23
+      when: item.vlan_id >= 22 and item.vlan_id <= 23
 
     - name: Configure HSRP for VLANs Management
       ios_config:
