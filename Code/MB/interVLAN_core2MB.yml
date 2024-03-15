@@ -12,7 +12,7 @@
         lines:
           - interface Vlan {{ item.vlan_id }}
           - description {{ item.department }}
-          - ip address 192.168.{{ item.vlan_id }}.3 {{ item.subnetmask }}
+          - ip address 172.168.{{ item.vlan_id }}.3 {{ item.subnetmask }}
           - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
@@ -23,7 +23,7 @@
         lines:
           - interface Vlan {{ item.vlan_id }}
           - description {{ item.department }}
-          - ip address 192.168.{{ item.vlan_id }}.2 {{ item.subnetmask }}
+          - ip address 172.168.{{ item.vlan_id }}.2 {{ item.subnetmask }}
           - ip helper-address 10.10.10.5
           - no shut
       with_items: "{{ vlans }}"
