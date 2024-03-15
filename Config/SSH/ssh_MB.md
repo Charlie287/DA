@@ -42,7 +42,7 @@ router ospf 10
 router-id 6.6.6.6
 net 172.16.1.0 0.0.0.3 area 0
 net 172.10.2.0 0.0.0.31 area 0
-net 192.168.0.0 0.0.255.255 area 0
+net 172.168.0.0 0.0.255.255 area 0
 passive-interface e1/0
 passive-interface e0/2
 passive-interface e0/3
@@ -92,7 +92,7 @@ router ospf 10
 router-id 5.5.5.5
 net 172.16.1.4 0.0.0.3 area 0
 net 172.10.2.0 0.0.0.31 area 0
-net 192.168.0.0 0.0.255.255 area 0
+net 172.168.0.0 0.0.255.255 area 0
 passive-interface e1/0
 passive-interface e0/2
 passive-interface e0/3
