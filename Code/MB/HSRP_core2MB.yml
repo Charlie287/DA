@@ -18,7 +18,7 @@
       ios_config:
         lines:
           - interface Vlan {{ item.vlan_id }}
-          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
+          - standby {{ item.vlan_id }} ip 172.168.{{ item.vlan_id }}.1
           - standby {{ item.vlan_id }} priority 90
           - standby {{ item.vlan_id }} track 1 decrement 50
       with_items: "{{ vlans }}"
@@ -28,7 +28,7 @@
       ios_config:
         lines:
           - interface Vlan {{ item.vlan_id }}
-          - standby {{ item.vlan_id }} ip 192.168.{{ item.vlan_id }}.1
+          - standby {{ item.vlan_id }} ip 172.168.{{ item.vlan_id }}.1
           - standby {{ item.vlan_id }} priority 110
           - standby {{ item.vlan_id }} preempt
           - standby {{ item.vlan_id }} track 1 decrement 50
